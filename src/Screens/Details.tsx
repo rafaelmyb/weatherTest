@@ -10,7 +10,6 @@ const Container = styled.View`
 
 const Details = ({route}: any) => {
   const {
-    dataId,
     humidity,
     pressure,
     windSpeed,
@@ -25,7 +24,6 @@ const Details = ({route}: any) => {
     <Container>
       <Card
         path="Details"
-        id={dataId}
         title={name}
         subtitle={subtitle}
         temperature={temperature}
