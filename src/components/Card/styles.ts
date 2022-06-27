@@ -6,7 +6,8 @@ interface Props {
 
 export const Container = styled.View<Props>`
   background-color: #fff;
-  height: 74px;
+  max-height: 70px;
+  height: 100%;
   padding: 8px 24px;
   flex-direction: row;
   justify-content: space-between;

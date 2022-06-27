@@ -26,7 +26,7 @@ const Card = ({path, title, subtitle, temperature, image}: CardProps) => {
       <ContentLeft>
         <WeatherImage
           source={{
-            uri: `http://openweathermap.org/img/w/${image}.png`,
+            uri: `http://openweathermap.org/img/w/${image[0]}.png`,
           }}
         />
         <TextContainer>
