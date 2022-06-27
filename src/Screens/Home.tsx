@@ -1,10 +1,15 @@
-import axios from 'axios';
 import React, {useEffect, useState} from 'react';
 import {Pressable} from 'react-native';
-import styled from 'styled-components/native';
+
+import axios from 'axios';
+
 import Card from '../components/Card';
 import {OPENWEATHER_API_URL, QUERY_PARAMS} from '../services/api';
 import {DataProps} from '../@types/Home';
+
+import arrowimg from '../assets/images/arrow.png';
+
+import styled from 'styled-components/native';
 
 const Container = styled.View`
   flex: 1;
@@ -82,7 +87,7 @@ const Home = ({navigation}: any) => {
                 listItem.weather.map(weatherItem => weatherItem.icon),
               )
             }>
-            <Arrow source={require('../assets/images/arrow.png')} />
+            <Arrow source={arrowimg} />
           </Pressable>
         </Container>
       ))}

@@ -1,8 +1,9 @@
 import React from 'react';
-import styled from 'styled-components/native';
+
 import Card from '../components/Card';
-// import Card from '../components/Card';
 import WeatherProperty from '../components/WeatherProperty';
+
+import styled from 'styled-components/native';
 
 const Container = styled.View`
   flex: 1;
