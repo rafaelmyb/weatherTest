@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, {useEffect, useState} from 'react';
-import {Pressable} from 'react-native';
+import {FlatList, Pressable} from 'react-native';
 import styled from 'styled-components/native';
 import Card from '../components/Card';
 import {OPENWEATHER_API_URL, QUERY_PARAMS} from '../services/api';
@@ -13,7 +13,7 @@ const Container = styled.View`
   align-items: center;
   background-color: #fff;
   border-bottom-color: #b5d7e4;
-  border-bottom-width: 1.5px;
+  border-bottom-width: 1px;
 `;
 
 const Arrow = styled.Image`
@@ -60,7 +60,38 @@ const Home = ({navigation}: any) => {
 
   return (
     <>
-      {data?.list.map(listItem => (
+      <FlatList
+        data={data?.list}
+        keyExtractor={listItem => listItem.name}
+        renderItem={({item}) => (
+          <Container>
+            <Card
+              path="Home"
+              title={item.name}
+              subtitle={item.weather.map(weatherItem => weatherItem.main)}
+              temperature={item.main.temp}
+              image={item.weather.map(weatherItem => weatherItem.icon)}
+            />
+            <Pressable
+              onPress={() =>
+                handleNavigation(
+                  item.main.humidity,
+                  item.main.pressure,
+                  item.wind.speed,
+                  item.clouds.all,
+                  item.name,
+                  item.weather.map(weatherItem => weatherItem.main),
+                  item.main.temp,
+                  item.weather.map(weatherItem => weatherItem.icon),
+                )
+              }>
+              <Arrow source={require('../assets/images/arrow.png')} />
+            </Pressable>
+          </Container>
+        )}
+      />
+
+      {/* {data?.list.map(listItem => (
         <Container key={listItem.id} data-testID="HomeContainer">
           <Card
             path="Home"
@@ -85,7 +116,7 @@ const Home = ({navigation}: any) => {
             <Arrow source={require('../assets/images/arrow.png')} />
           </Pressable>
         </Container>
-      ))}
+      ))} */}
     </>
   );
 };

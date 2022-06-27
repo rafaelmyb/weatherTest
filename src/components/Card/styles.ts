@@ -6,13 +6,13 @@ interface Props {
 
 export const Container = styled.View<Props>`
   background-color: #fff;
-  height: 80px;
+  height: 74px;
   padding: 8px 24px;
   flex-direction: row;
   justify-content: space-between;
   flex: ${({path}) => (path === 'Details' ? 'none' : '1')};
   border-bottom-color: ${({path}) => (path === 'Details' ? '#b5d7e4' : '#fff')};
-  border-bottom-width: 1.5px;
+  border-bottom-width: 1px;
 `;
 
 export const ContentLeft = styled.View`
