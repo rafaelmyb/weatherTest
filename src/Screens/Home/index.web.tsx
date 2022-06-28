@@ -3,11 +3,11 @@ import {Pressable} from 'react-native';
 
 import axios from 'axios';
 
-import Card from '../components/Card';
-import {OPENWEATHER_API_URL, QUERY_PARAMS} from '../services/api';
-import {DataProps} from '../@types/Home';
+import Card from '../../components/Card';
+import {OPENWEATHER_API_URL, QUERY_PARAMS} from '../../services/api';
+import {DataProps} from '../../@types/Home';
 
-import arrowimg from '../assets/images/arrow.png';
+import arrowimg from '../../assets/images/arrow.png';
 
 import styled from 'styled-components/native';
 

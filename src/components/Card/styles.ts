@@ -6,9 +6,9 @@ interface Props {
 
 export const Container = styled.View<Props>`
   background-color: #fff;
-  max-height: 70px;
+  max-height: 80px;
   height: 100%;
-  padding: 8px 24px;
+  padding: 16px 24px;
   flex-direction: row;
   justify-content: space-between;
   flex: ${({path}) => (path === 'Details' ? 'none' : '1')};
