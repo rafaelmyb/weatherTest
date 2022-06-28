@@ -1,10 +1,15 @@
-import axios from 'axios';
 import React, {useEffect, useState} from 'react';
 import {FlatList, Pressable} from 'react-native';
+
+import axios from 'axios';
+
+import Card from '../../components/Card';
+import {OPENWEATHER_API_URL, QUERY_PARAMS} from '../../services/api';
+import {DataProps} from '../../@types/Home';
+
+import arrowimg from '../../assets/images/arrow.png';
+
 import styled from 'styled-components/native';
-import Card from '../components/Card';
-import {OPENWEATHER_API_URL, QUERY_PARAMS} from '../services/api';
-import {DataProps} from '../@types/Home';
 
 const Container = styled.View`
   flex: 1;
@@ -85,38 +90,11 @@ const Home = ({navigation}: any) => {
                   item.weather.map(weatherItem => weatherItem.icon),
                 )
               }>
-              <Arrow source={require('../assets/images/arrow.png')} />
+              <Arrow source={arrowimg} />
             </Pressable>
           </Container>
         )}
       />
-
-      {/* {data?.list.map(listItem => (
-        <Container key={listItem.id} data-testID="HomeContainer">
-          <Card
-            path="Home"
-            title={listItem.name}
-            subtitle={listItem.weather.map(weatherItem => weatherItem.main)}
-            temperature={listItem.main.temp}
-            image={listItem.weather.map(weatherItem => weatherItem.icon)}
-          />
-          <Pressable
-            onPress={() =>
-              handleNavigation(
-                listItem.main.humidity,
-                listItem.main.pressure,
-                listItem.wind.speed,
-                listItem.clouds.all,
-                listItem.name,
-                listItem.weather.map(weatherItem => weatherItem.main),
-                listItem.main.temp,
-                listItem.weather.map(weatherItem => weatherItem.icon),
-              )
-            }>
-            <Arrow source={require('../assets/images/arrow.png')} />
-          </Pressable>
-        </Container>
-      ))} */}
     </>
   );
 };

@@ -6,6 +6,8 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Details from './src/Screens/Details';
 import Home from './src/Screens/Home';
 
+import backarrow from './src/assets/images/leftArrow.png';
+
 const Stack = createNativeStackNavigator();
 
 const App = () => {
@@ -27,7 +29,7 @@ const App = () => {
           component={Details}
           options={{
             title: 'Details',
-            headerBackImageSource: require('./src/assets/images/leftArrow.png'),
+            headerBackImageSource: backarrow,
           }}
         />
       </Stack.Navigator>
