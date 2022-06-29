@@ -10,6 +10,7 @@ import {DataProps} from '../../@types/Home';
 import arrowimg from '../../assets/images/arrow.png';
 
 import styled from 'styled-components/native';
+import NewModuleButton from '../../components/NewModuleButton';
 
 const Container = styled.View`
   flex: 1;
@@ -65,6 +66,7 @@ const Home = ({navigation}: any) => {
 
   return (
     <>
+      <NewModuleButton />
       <FlatList
         data={data?.list}
         keyExtractor={listItem => listItem.name}
