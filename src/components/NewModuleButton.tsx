@@ -1,17 +1,25 @@
 import React from 'react';
-import {NativeModules, Button} from 'react-native';
+import {Button} from 'react-native';
+import CalendarModule from './CalendarModule';
 
 const NewModuleButton = () => {
-  const {CalendarModule} = NativeModules;
-  const onPress = () => {
-    CalendarModule.createCalendarEvent('Rafael', 'localization');
+  const onSubmit = async () => {
+    try {
+      const eventId = await CalendarModule.createCalendarEvent(
+        'Party',
+        'My House',
+      );
+      console.log(`Created a new event with id ${eventId}`);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
     <Button
       title="Click to invoke your native module!"
       color="#841584"
-      onPress={onPress}
+      onPress={onSubmit}
     />
   );
 };
