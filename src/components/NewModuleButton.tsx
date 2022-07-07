@@ -2,9 +2,12 @@ import React from 'react';
 import {Button} from 'react-native';
 import CalendarModule from './CalendarModule';
 
-const NewModuleButton = () => {
+const NewModuleButton = (title, description) => {
   const handleCreateCalendarReminder = async () => {
-    await CalendarModule.createCalendarEvent();
+    const Title = title.title;
+    const Description = title.description[0];
+
+    await CalendarModule.createCalendarEvent(Title, Description);
   };
 
   return (

@@ -7,7 +7,7 @@ const {DEFAULT_EVENT_NAME} = CalendarModule.getConstants();
 console.log(DEFAULT_EVENT_NAME);
 
 interface CalendarInterface {
-  createCalendarEvent(): void;
+  createCalendarEvent(title: string, description: any): void;
 }
 
 export default CalendarModule as CalendarInterface;
