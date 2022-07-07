@@ -35,6 +35,7 @@ public class CalendarModule extends ReactContextBaseJavaModule {
       Intent intent = new Intent(Intent.ACTION_INSERT);
       intent.setData(CalendarContract.Events.CONTENT_URI);
       intent.putExtra(CalendarContract.Events.TITLE, Title.toString());
+      intent.putExtra(CalendarContract.Events.EVENT_LOCATION, Title.toString());
       intent.putExtra(CalendarContract.Events.DESCRIPTION, Description.toString());
       intent.putExtra(CalendarContract.Events.ALL_DAY, "true");
       Activity activity = getCurrentActivity();
