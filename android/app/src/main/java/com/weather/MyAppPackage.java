@@ -1,4 +1,7 @@
 package com.weather;
+
+import androidx.annotation.NonNull;
+
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -9,20 +12,23 @@ import java.util.Collections;
 import java.util.List;
 
 public class MyAppPackage implements ReactPackage {
+    @SuppressWarnings("rawtypes")
+    @NonNull
+    @Override
+    public List<ViewManager> createViewManagers(@NonNull ReactApplicationContext reactContext) {
+        return Collections.emptyList();
+    }
 
-   @Override
-   public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
-       return Collections.emptyList();
-   }
+    @NonNull
+    @Override
+    public List<NativeModule> createNativeModules(
+            @NonNull ReactApplicationContext reactContext) {
+        List<NativeModule> modules = new ArrayList<>();
 
-   @Override
-   public List<NativeModule> createNativeModules(
-           ReactApplicationContext reactContext) {
-       List<NativeModule> modules = new ArrayList<>();
+        modules.add(new CalendarModule(reactContext));
+        modules.add(new GooglePayModule(reactContext));
 
-       modules.add(new CalendarModule(reactContext));
-
-       return modules;
-   }
-
+        return modules;
+    }
 }
+

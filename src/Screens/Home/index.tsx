@@ -6,6 +6,7 @@ import axios from 'axios';
 import Card from '../../components/Card';
 import {OPENWEATHER_API_URL, QUERY_PARAMS} from '../../services/api';
 import {DataProps} from '../../@types/Home';
+import GooglePayOpenButton from '../../components/GooglePayOpenButton';
 
 import arrowimg from '../../assets/images/arrow.png';
 
@@ -65,6 +66,7 @@ const Home = ({navigation}: any) => {
 
   return (
     <>
+      <GooglePayOpenButton />
       <FlatList
         data={data?.list}
         keyExtractor={listItem => listItem.name}
