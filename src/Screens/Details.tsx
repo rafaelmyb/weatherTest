@@ -2,6 +2,8 @@ import React from 'react';
 
 import Card from '../components/Card';
 import WeatherProperty from '../components/WeatherProperty';
+import NewModuleButton from '../components/NewModuleButton';
+import CalendarModule from '../components/CalendarModule';
 
 import styled from 'styled-components/native';
 
@@ -23,6 +25,10 @@ const Details = ({route}: any) => {
 
   return (
     <Container>
+      <NewModuleButton
+        title={name}
+        description={subtitle}
+      />
       <Card
         path="Details"
         title={name}
