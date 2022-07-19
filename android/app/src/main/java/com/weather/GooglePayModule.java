@@ -25,6 +25,8 @@ import com.google.android.gms.wallet.Wallet;
 import com.google.android.gms.wallet.WalletConstants;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,12 +56,39 @@ public class GooglePayModule extends ReactContextBaseJavaModule {
     private static JSONObject getTokenizationSpecification(ReadableMap gateway) throws JSONException {
         JSONObject tokenizationSpecification = new JSONObject();
         tokenizationSpecification.put("type", "PAYMENT_GATEWAY");
-        tokenizationSpecification.put(
-                "parameters",
-                new JSONObject()
-                        .put("gateway", gateway.getString("name"))
-                        .put("gatewayMerchantId", gateway.getString("merchantId")));
+        switch (gateway.getString("name").toLowerCase()) {
+            case "braintree": {
+                tokenizationSpecification.put(
+                        "parameters",
+                        new JSONObject()
+                                .put("gateway", "braintree")
+                                .put("braintree:apiVersion", "v1")
+                                .put("braintree:sdkVersion", gateway.getString("sdkVersion"))
+                                .put("braintree:merchantId", gateway.getString("merchantId"))
+                                .put("braintree:clientKey", gateway.getString("clientKey")));
 
+                break;
+            }
+            case "stripe": {
+                tokenizationSpecification.put(
+                        "parameters",
+                        new JSONObject()
+                                .put("gateway", "stripe")
+                                .put("stripe:sdkVersion", gateway.getString("sdkVersion"))
+                                .put("stripe:publishableKey", gateway.getString("clientKey")));
+
+                break;
+            }
+            default: {
+                tokenizationSpecification.put(
+                        "parameters",
+                        new JSONObject()
+                                .put("gateway", gateway.getString("name"))
+                                .put("gatewayMerchantId", gateway.getString("merchantId")));
+
+                break;
+            }
+        }
         return tokenizationSpecification;
     }
 
@@ -76,8 +105,8 @@ public class GooglePayModule extends ReactContextBaseJavaModule {
 
     private static JSONArray getAllowedCardAuthMethods() {
         return new JSONArray()
-                // .put("CRYPTOGRAM_3DS");
-                .put("PAN_ONLY");
+                .put("PAN_ONLY")
+                .put("CRYPTOGRAM_3DS");
     }
 
     private static JSONObject getBaseCardPaymentMethod(ReadableArray cardNetworks) throws JSONException {
@@ -217,6 +246,44 @@ public class GooglePayModule extends ReactContextBaseJavaModule {
         constants.put(ENVIRONMENT_TEST_KEY, WalletConstants.ENVIRONMENT_TEST);
         return constants;
     }
+
+    @ReactMethod
+    public void checkGooglePayIsEnable(int environment, ReadableArray cardNetworks, final Promise promise) {
+        final JSONObject isReadyToPayJson = GooglePayModule.getIsReadyToPayRequest(cardNetworks);
+        if (isReadyToPayJson == null) {
+            promise.reject(NOT_READY_TO_PAY, "not ready to pay");
+        }
+        IsReadyToPayRequest request = IsReadyToPayRequest.fromJson(isReadyToPayJson.toString());
+        if (request == null) {
+            promise.reject(NOT_READY_TO_PAY, "not ready to pay");
+        }
+
+        Activity activity = getCurrentActivity();
+
+        if (activity == null) {
+            promise.reject(E_NO_ACTIVITY, "activity is null");
+        }
+
+        Task<Boolean> task = getPaymentsClient(environment, activity).isReadyToPay(request);
+        task.addOnCompleteListener(
+                new OnCompleteListener<Boolean>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Boolean> task) {
+                        try {
+                            boolean result = task.getResult(ApiException.class);
+                            if (result) {
+                                promise.resolve(result);
+                            } else {
+                                promise.reject(NOT_READY_TO_PAY, "not ready to pay");
+                            }
+                        } catch (ApiException exception) {
+                            promise.reject(E_FAILED_TO_DETECT_IF_READY, exception.getMessage());
+                        }
+                    }
+                }
+        );
+    }
+
 
     @ReactMethod
     public void show(int environment, ReadableMap requestData, final Promise promise) {

@@ -10,7 +10,7 @@ const GooglePayOpenButton = () => {
     cardPaymentMethodMap: {
       gateway: {
         name: 'example',
-        merchantId: 'exampleGatewayMerchantId',
+        gatewayMerchantId: 'exampleMerchantId',
       },
       cardNetworks
     },
@@ -23,23 +23,41 @@ const GooglePayOpenButton = () => {
   }
 
   const handleOpenGooglePay = async () => {
-     const paymentRequestToken = await GooglePayModule.show(GooglePayModule.ENVIRONMENT_TEST, paymentRequest);
-
-     const token = await GooglePayModule.show(
+     const paymentRequestToken = await GooglePayModule.show(
        GooglePayModule.ENVIRONMENT_TEST,
        paymentRequest
-       ).catch(error => {
-         this.setState({ text: `error: ${error}` })
-         return error;
-     })
+       ).then(token => {
+         console.log(token)
+       }).catch(error => {
+           console.log('Erro: ', error);
+           return error;
+          })
+  }
+
+  const onPressCheck = async () => {
+    const isAvailable = await GooglePayModule.checkGooglePayIsEnable(
+      GooglePayModule.ENVIRONMENT_TEST,
+      cardNetworks
+    ).catch(error => {
+      console.log('Erro: ', error);
+      return false
+    })
+    console.log(isAvailable);
   }
 
   return (
-    <Button
-      title="Click to open Google Pay"
-      color="#841584"
-      onPress={handleOpenGooglePay}
-    />
+    <>
+        <Button
+          title="Click to open Google Pay"
+          color="#841584"
+          onPress={handleOpenGooglePay}
+        />
+        <Button
+          title="Google Pay is Available?"
+          color="#841584"
+          onPress={onPressCheck}
+        />
+    </>
   );
 };
 
