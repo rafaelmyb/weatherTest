@@ -105,8 +105,8 @@ public class GooglePayModule extends ReactContextBaseJavaModule {
 
     private static JSONArray getAllowedCardAuthMethods() {
         return new JSONArray()
-                .put("PAN_ONLY")
-                .put("CRYPTOGRAM_3DS");
+                .put("PAN_ONLY");
+                // .put("CRYPTOGRAM_3DS");
     }
 
     private static JSONObject getBaseCardPaymentMethod(ReadableArray cardNetworks) throws JSONException {

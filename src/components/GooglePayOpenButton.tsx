@@ -9,8 +9,10 @@ const GooglePayOpenButton = () => {
   const paymentRequest = {
     cardPaymentMethodMap: {
       gateway: {
-        name: 'example',
-        gatewayMerchantId: 'exampleMerchantId',
+        name: 'braintree',
+        merchantId: '7d4b76ydqx3j8pcq',
+        clientKey: 'sandbox_6mvsgfhy_7d4b76ydqx3j8pcq',
+        sdkVersion: '4.13.0'
       },
       cardNetworks
     },
