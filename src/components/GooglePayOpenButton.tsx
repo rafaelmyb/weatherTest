@@ -2,8 +2,11 @@ import React from 'react';
 import {Button} from 'react-native';
 import {NativeModules} from 'react-native';
 const {GooglePayModule} = NativeModules;
+import GooglePaySuccess from '../Screens/GooglePaySuccess';
 
-const GooglePayOpenButton = () => {
+const GooglePayOpenButton = ({navigation}) => {
+  const { navigate } = navigation;
+
   const cardNetworks = ['AMEX', 'JCB', 'MASTERCARD', 'VISA']
 
   const paymentRequest = {
@@ -29,6 +32,7 @@ const GooglePayOpenButton = () => {
        GooglePayModule.ENVIRONMENT_TEST,
        paymentRequest
        ).then(token => {
+         navigate('GooglePaySuccess')
          console.log(token)
        }).catch(error => {
            console.log('Erro: ', error);
@@ -50,7 +54,7 @@ const GooglePayOpenButton = () => {
   return (
     <>
         <Button
-          title="Click to open Google Pay"
+          title="Buy with Google Pay"
           color="#841584"
           onPress={handleOpenGooglePay}
         />

@@ -66,7 +66,7 @@ const Home = ({navigation}: any) => {
 
   return (
     <>
-      <GooglePayOpenButton />
+      <GooglePayOpenButton navigation={navigation} />
       <FlatList
         data={data?.list}
         keyExtractor={listItem => listItem.name}
