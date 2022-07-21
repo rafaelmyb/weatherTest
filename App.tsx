@@ -37,6 +37,9 @@ const App = () => {
           options={{
             title: 'Google Pay',
             headerBackImageSource: require('./src/assets/images/leftArrow.png'),
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
           }}
         />
       </Stack.Navigator>
