@@ -6,9 +6,14 @@ import styled from 'styled-components/native'
 
 const Container = styled.View`
     flex: 1;
+    background-color: #fff;
+    align-items: center;
+`;
+
+const Content = styled.View`
+    flex: 1;
     align-items: center;
     justify-content: center;
-    background-color: #fff;
 `;
 
 const Image = styled.Image`
@@ -22,21 +27,32 @@ const Text = styled.Text`
     color: #727579;
 `;
 
+const Button = styled.TouchableOpacity`
+    padding: 12px 24px;
+    border: 1px solid #000;
+    border-radius: 8px;
+    margin-bottom: 24px;
+    background-color: rgba(0, 0, 0, 0);
+`;
+
 const GooglePaySuccess = ({ navigation }) => {
     const { navigate } = navigation;
 
-    useEffect(() => {
-        setTimeout(() => {
-            navigate('Home')
-        }, 5000)
-    }, [])
+    function handleNavigateBack() {
+      navigate('Home');
+    }
 
     return (
         <Container>
-            <Image source={googlepayicon} />
-            <Text>
-                Compra realizada com sucesso!
-            </Text>
+            <Content>
+                <Image source={googlepayicon} />
+                <Text>
+                    Compra realizada com sucesso!
+                </Text>
+            </Content>
+            <Button onPress={() => handleNavigateBack()}>
+                <Text>Voltar para tela inicial</Text>
+            </Button>
         </Container>
     )
 }
