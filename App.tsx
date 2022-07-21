@@ -5,6 +5,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import Details from './src/Screens/Details';
 import Home from './src/Screens/Home';
+import GooglePaySuccess from './src/Screens/GooglePaySuccess';
 
 const Stack = createNativeStackNavigator();
 
@@ -28,6 +29,17 @@ const App = () => {
           options={{
             title: 'Details',
             headerBackImageSource: require('./src/assets/images/leftArrow.png'),
+          }}
+        />
+        <Stack.Screen
+          name="GooglePaySuccess"
+          component={GooglePaySuccess}
+          options={{
+            title: 'Google Pay',
+            headerBackImageSource: require('./src/assets/images/leftArrow.png'),
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
           }}
         />
       </Stack.Navigator>

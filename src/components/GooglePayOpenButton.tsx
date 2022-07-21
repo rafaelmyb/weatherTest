@@ -2,15 +2,20 @@ import React from 'react';
 import {Button} from 'react-native';
 import {NativeModules} from 'react-native';
 const {GooglePayModule} = NativeModules;
+import GooglePaySuccess from '../Screens/GooglePaySuccess';
 
-const GooglePayOpenButton = () => {
+const GooglePayOpenButton = ({navigation}) => {
+  const { navigate } = navigation;
+
   const cardNetworks = ['AMEX', 'JCB', 'MASTERCARD', 'VISA']
 
   const paymentRequest = {
     cardPaymentMethodMap: {
       gateway: {
-        name: 'example',
-        merchantId: 'exampleGatewayMerchantId',
+        name: 'braintree',
+        merchantId: '7d4b76ydqx3j8pcq',
+        clientKey: 'sandbox_6mvsgfhy_7d4b76ydqx3j8pcq',
+        sdkVersion: '4.13.0'
       },
       cardNetworks
     },
@@ -23,23 +28,42 @@ const GooglePayOpenButton = () => {
   }
 
   const handleOpenGooglePay = async () => {
-     const paymentRequestToken = await GooglePayModule.show(GooglePayModule.ENVIRONMENT_TEST, paymentRequest);
-
-     const token = await GooglePayModule.show(
+     const paymentRequestToken = await GooglePayModule.show(
        GooglePayModule.ENVIRONMENT_TEST,
        paymentRequest
-       ).catch(error => {
-         this.setState({ text: `error: ${error}` })
-         return error;
-     })
+       ).then(token => {
+         navigate('GooglePaySuccess')
+         console.log(token)
+       }).catch(error => {
+           console.log('Erro: ', error);
+           return error;
+          })
+  }
+
+  const onPressCheck = async () => {
+    const isAvailable = await GooglePayModule.checkGooglePayIsEnable(
+      GooglePayModule.ENVIRONMENT_TEST,
+      cardNetworks
+    ).catch(error => {
+      console.log('Erro: ', error);
+      return false
+    })
+    console.log(isAvailable);
   }
 
   return (
-    <Button
-      title="Click to open Google Pay"
-      color="#841584"
-      onPress={handleOpenGooglePay}
-    />
+    <>
+        <Button
+          title="Buy with Google Pay"
+          color="#841584"
+          onPress={handleOpenGooglePay}
+        />
+        <Button
+          title="Google Pay is Available?"
+          color="#841584"
+          onPress={onPressCheck}
+        />
+    </>
   );
 };
 
